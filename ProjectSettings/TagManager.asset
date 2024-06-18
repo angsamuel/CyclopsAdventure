@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Terrain
   - Projectile
+  - Interactable
+  - Creature
   layers:
   - Default
   - TransparentFX
@@ -48,6 +50,9 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 2128671581
+    locked: 0
+  - name: Environment
+    uniqueID: 758773313
     locked: 0
   - name: Creature
     uniqueID: 2163094167

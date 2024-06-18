@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
+    enum MovementMode{walk, climb};
+    public bool isPlayerCreature = false;
 
+    [Header("Stats")]
     [SerializeField] int health = 3;
     [SerializeField] float speed = 10.0f;
     [SerializeField] float jumpForce = 10;
+
+    [Header("Helpers")]
     [SerializeField] LayerMask jumpMask;
     [SerializeField] Transform footMarker;
 
+    [Header("Trackers")]
     [SerializeField] Crossbow crossbow;
+    [SerializeField] Interactable currentInteractable;
+    [SerializeField] MovementMode moveMode = MovementMode.walk;
+    float cachedDefaultGravity = 0;
 
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
+
 
 
     void SetHealth(int newHealth){
@@ -26,12 +36,14 @@ public class Creature : MonoBehaviour
 
     void Awake(){
         rb = GetComponent<Rigidbody2D>();
+        cachedDefaultGravity = rb.gravityScale;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Creature start!");
+
 
     }
 
@@ -52,12 +64,19 @@ public class Creature : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
+        if(IsClimbing()){
+            rb.velocity = movement;
+            return;
+        }
+
         //GetComponent<Transform>().position += movement;
         //transform.position += movement;
-
+        movement.y = 0;
         rb.velocity = movement + new Vector3(0,rb.velocity.y,0);
         //GetComponent<Rigidbody2D>().AddForce(movement * Time.fixedDeltaTime);
         //GetComponent<Rigidbody2D>().MovePosition(GetComponent<Transform>().position + movement * Time.fixedDeltaTime);
+
+
     }
 
     IEnumerator JumpBuffer(){
@@ -103,5 +122,62 @@ public class Creature : MonoBehaviour
     }
 
 
+
+    //interactable code
+
+
+    void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("Interactable")){
+            currentInteractable = other.GetComponent<Interactable>();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.CompareTag("Interactable")){
+            if(other.GetComponent<Interactable>() == currentInteractable){
+                currentInteractable = null;
+            }
+        }
+    }
+
+    public void Interact(){
+        if(currentInteractable == null){
+            return;
+        }
+        currentInteractable.Interact(this);
+    }
+
+    //Climbing Behavior
+
+    public void SetModeWalk(){
+        rb.gravityScale = cachedDefaultGravity;
+        moveMode = MovementMode.walk;
+    }
+    public void SetModeClimb(){
+        rb.gravityScale = 0;
+        moveMode = MovementMode.climb;
+    }
+    public bool IsClimbing(){
+        return moveMode == MovementMode.climb;
+    }
+
+    [SerializeField] int climbSupports = 0;
+
+    public void AddClimbSupport(){
+        climbSupports += 1;
+    }
+    public void RemoveClimbSupport(){
+        climbSupports -= 1;
+
+        //just in case :)
+        if(climbSupports < 0){
+            climbSupports = 0;
+        }
+
+        if(climbSupports == 0 && IsClimbing()){
+            SetModeWalk();
+        }
+    }
 
 }

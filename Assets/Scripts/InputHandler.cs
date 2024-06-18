@@ -27,6 +27,12 @@ public class InputHandler : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0)){
             playerCreature.UseTool();
         }
+
+        if(Input.GetKeyDown(KeyCode.F)){
+            playerCreature.Interact();
+        }
+
+
     }
 
 
@@ -36,12 +42,12 @@ public class InputHandler : MonoBehaviour
         Vector3 movement = Vector3.zero;
 
 
-        // if(Input.GetKey(KeyCode.W)){ //holding down W
-        //     movement += new Vector3(0,1,0);
-        // }
-        // if(Input.GetKey(KeyCode.S)){
-        //     movement += new Vector3(0,-1,0);
-        // }
+        if(Input.GetKey(KeyCode.W)){ //holding down W
+            movement += new Vector3(0,1,0);
+        }
+        if(Input.GetKey(KeyCode.S)){
+            movement += new Vector3(0,-1,0);
+        }
         if(Input.GetKey(KeyCode.A)){
             movement += new Vector3(-1,0,0);
         }
@@ -51,6 +57,7 @@ public class InputHandler : MonoBehaviour
         playerCreature.Move(movement);
         playerCreature.AimTool(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
+        //interaction code
 
 
     }
