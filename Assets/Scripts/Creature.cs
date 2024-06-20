@@ -8,18 +8,19 @@ public class Creature : MonoBehaviour
     public bool isPlayerCreature = false;
 
     [Header("Stats")]
-    [SerializeField] int health = 3;
     [SerializeField] float speed = 10.0f;
     [SerializeField] float jumpForce = 10;
 
     [Header("Helpers")]
     [SerializeField] LayerMask jumpMask;
     [SerializeField] Transform footMarker;
+    Health health;
 
     [Header("Trackers")]
     [SerializeField] Crossbow crossbow;
     [SerializeField] Interactable currentInteractable;
     [SerializeField] MovementMode moveMode = MovementMode.walk;
+    [SerializeField] int climbSupports = 0;
     float cachedDefaultGravity = 0;
 
     Rigidbody2D rb;
@@ -27,31 +28,32 @@ public class Creature : MonoBehaviour
 
 
 
-    void SetHealth(int newHealth){
-        health = newHealth;
-        if(health < 0){
-            health = 0;
-        }
-    }
-
     void Awake(){
         rb = GetComponent<Rigidbody2D>();
         cachedDefaultGravity = rb.gravityScale;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        health = GetComponent<Health>();
     }
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Creature start!");
 
-
     }
+
 
     // Update is called once per framehttps://aka.ms/vscode-workspace-trust
     void Update()
     {
+        if(health.GetHealth() < 1){
+            Die();
+        }
 
+    }
 
+    void Die(){
+        GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<CapsuleCollider2D>().isTrigger = true;
     }
 
     public void Move(Vector3 movement){
@@ -162,7 +164,7 @@ public class Creature : MonoBehaviour
         return moveMode == MovementMode.climb;
     }
 
-    [SerializeField] int climbSupports = 0;
+
 
     public void AddClimbSupport(){
         climbSupports += 1;
@@ -179,5 +181,7 @@ public class Creature : MonoBehaviour
             SetModeWalk();
         }
     }
+
+
 
 }

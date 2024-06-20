@@ -12,8 +12,16 @@ public class KillZone : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.GetComponent<Creature>()!=null){
-            SceneManager.LoadScene("MainMenu");
+        if(other.GetComponent<Creature>()==null){
+            return;
         }
+
+        if(!other.GetComponent<Creature>().isPlayerCreature){
+            return;
+        }
+
+        SceneManager.LoadScene("MainMenu");
     }
+
+
 }

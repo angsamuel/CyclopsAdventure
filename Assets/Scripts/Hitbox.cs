@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
+    [SerializeField] int damage = 1;
     bool disabled = false;
     public void DisableHitbox(){
         disabled = true;
@@ -13,7 +14,7 @@ public class Hitbox : MonoBehaviour
             return;
         }
         if(other.GetComponent<Hurtbox>() != null){
-            other.GetComponent<Hurtbox>().Hurt();
+            other.GetComponent<Hurtbox>().Hurt(damage);
         }
     }
 }

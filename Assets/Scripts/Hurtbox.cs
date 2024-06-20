@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
 {
+    [SerializeField] Health health;
 
-
-    public void Hurt(){
-        GetComponent<SpriteRenderer>().color = new Color(0,1,1);
+    public void Hurt(int damage){
+        health.TakeDamage(damage);
     }
 }

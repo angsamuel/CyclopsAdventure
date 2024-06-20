@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Interactable
   - Creature
+  - Hurtbox
   layers:
   - Default
   - TransparentFX
