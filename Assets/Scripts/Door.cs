@@ -14,13 +14,14 @@ public class Door : MonoBehaviour
     }
 
     public void OpenDoor(){
-        GetComponent<BoxCollider2D>().isTrigger = true;
+        GetComponent<BoxCollider2D>().enabled = false;
+        //
         GetComponent<SpriteRenderer>().sprite = openDoorSprite;
         isOpen = true;
     }
 
     public void CloseDoor(){
-        GetComponent<BoxCollider2D>().isTrigger = false;
+        GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<SpriteRenderer>().sprite = closedDoorSprite;
         isOpen = false;
     }
@@ -32,4 +33,6 @@ public class Door : MonoBehaviour
             OpenDoor();
         }
     }
+
+
 }

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5316384512178392610}
   m_Layer: 0
   m_Name: Creature
-  m_TagString: Untagged
+  m_TagString: Creature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerCreature: 0
-  health: 3
   speed: 5
   jumpForce: 10
   jumpMask:

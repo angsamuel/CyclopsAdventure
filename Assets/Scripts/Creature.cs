@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
+    public static string favoriteFood = "PB&J";
     enum MovementMode{walk, climb};
     public bool isPlayerCreature = false;
 
     [Header("Stats")]
     [SerializeField] float speed = 10.0f;
     [SerializeField] float jumpForce = 10;
+
 
     [Header("Helpers")]
     [SerializeField] LayerMask jumpMask;
@@ -38,6 +40,7 @@ public class Creature : MonoBehaviour
     void Start()
     {
         Debug.Log("Creature start!");
+        CreatureManager.singleton.RegisterCreature(this);
 
     }
 
@@ -55,8 +58,11 @@ public class Creature : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.red;
         GetComponent<CapsuleCollider2D>().isTrigger = true;
     }
-
+    public void Stop(){
+        Move(Vector3.zero);
+    }
     public void Move(Vector3 movement){
+
         movement *= speed;
 
         if(movement.x < 0){
@@ -77,8 +83,6 @@ public class Creature : MonoBehaviour
         rb.velocity = movement + new Vector3(0,rb.velocity.y,0);
         //GetComponent<Rigidbody2D>().AddForce(movement * Time.fixedDeltaTime);
         //GetComponent<Rigidbody2D>().MovePosition(GetComponent<Transform>().position + movement * Time.fixedDeltaTime);
-
-
     }
 
     IEnumerator JumpBuffer(){

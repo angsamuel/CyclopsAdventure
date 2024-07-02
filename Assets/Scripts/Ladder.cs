@@ -24,6 +24,7 @@ public class Ladder : MonoBehaviour
     // }
 
     void OnTriggerEnter2D(Collider2D other){
+
         GetComponent<SpriteRenderer>().color = Color.red;
         Debug.Log("Collision Detected!");
     }

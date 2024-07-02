@@ -12,6 +12,8 @@ public class BasicAI : MonoBehaviour
     [Header("Config")]
     [SerializeField] float sightRange = 5;
     float sightRangeSquared;
+    [SerializeField] LayerMask terrainMask;
+    [SerializeField] LayerMask sightMask;
 
 
     public delegate void AIState();
@@ -51,11 +53,21 @@ public class BasicAI : MonoBehaviour
         currentState();
     }
 
-    bool CanSeeTarget(){
-        if((myCreature.transform.position - targetCreature.transform.position).sqrMagnitude <= sightRangeSquared){
-            return true;
+    bool CanSeeTarget(Creature tempTarget){
+        if(tempTarget == null){ //this was the issue
+            return false;
         }
-        return false;
+        if((myCreature.transform.position - tempTarget.transform.position).sqrMagnitude > sightRangeSquared){
+            return false;
+        }
+        if(Physics2D.Linecast(myCreature.transform.position,tempTarget.transform.position,sightMask)){
+            return false;
+        }
+        return true;
+    }
+
+    bool CanSeeTarget(){
+        return CanSeeTarget(targetCreature);
     }
 
     void AttackState(){
@@ -63,6 +75,7 @@ public class BasicAI : MonoBehaviour
             ChangeState(PatrolState);
             return;
         }
+        myCreature.Stop();
 
         myCreature.AimTool(targetCreature.transform.position);
 
@@ -73,14 +86,54 @@ public class BasicAI : MonoBehaviour
         Debug.Log("AttackState");
         myCreature.UseTool();
         ResetStateTime();
-
-
     }
 
+
+    int patrolDirection = 1;
     void PatrolState(){
-        Debug.Log("PatrolState");
+
+        SearchForTarget();
+
+
+
         if(CanSeeTarget()){
             ChangeState(AttackState);
+            return;
+        }
+
+        if(stateTime < 1){
+            myCreature.Stop();
+            return;
+        }
+
+        myCreature.Move(new Vector3(patrolDirection,0,0));
+
+
+        Vector3 footCheckPosition = myCreature.transform.position + new Vector3(patrolDirection,0,0) - new Vector3(0,1,0);
+        Vector3 moveCheckPosition = myCreature.transform.position + new Vector3(patrolDirection,0,0);
+        if(Physics2D.OverlapCircle(moveCheckPosition,.1f,terrainMask) != null){
+            ResetStateTime();
+            Debug.Log("something blocks us");
+            patrolDirection *= -1;
+        }
+        else if(Physics2D.OverlapCircle(footCheckPosition,.1f,terrainMask) == null){
+            ResetStateTime();
+            Debug.Log("no ground ahead");
+            patrolDirection *= -1;
+        }
+    }
+
+    void SearchForTarget(){
+
+        foreach(Creature c in CreatureManager.singleton.GetCreatures()){
+            //
+            if(c == myCreature){
+                continue; //we don't wanna target ourselves!
+            }
+            if(CanSeeTarget(c)){
+                Debug.Log(c.gameObject.name);
+                targetCreature = c;
+            }
         }
     }
 }
