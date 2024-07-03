@@ -16,6 +16,7 @@ public class Creature : MonoBehaviour
     [Header("Helpers")]
     [SerializeField] LayerMask jumpMask;
     [SerializeField] Transform footMarker;
+    [SerializeField] ParticleSystem jumpPoof;
     Health health;
 
     [Header("Trackers")]
@@ -63,6 +64,12 @@ public class Creature : MonoBehaviour
     }
     public void Move(Vector3 movement){
 
+        if(movement == Vector3.zero){
+            GetComponent<AnimationStateChanger>().ChangeAnimationState("Idle");
+        }else{
+            GetComponent<AnimationStateChanger>().ChangeAnimationState("Walk", speed / 5);
+        }
+
         movement *= speed;
 
         if(movement.x < 0){
@@ -108,12 +115,14 @@ public class Creature : MonoBehaviour
     }
 
     public void Jump(){
+
         if(!CanJump()){
             StartCoroutine(JumpBuffer());
             return;
         }
         rb.velocity = new Vector2(rb.velocity.x,0);
         rb.AddForce(new Vector3(0,1,0)*jumpForce,ForceMode2D.Impulse);
+        jumpPoof.Play();
     }
 
     public void AimTool(Vector3 targetPosition){
