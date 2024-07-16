@@ -195,6 +195,11 @@ public class Creature : MonoBehaviour
         }
     }
 
+    public void Reload(){
+        if(crossbow != null){
+            crossbow.Reload();
+        }
+    }
 
 
 }

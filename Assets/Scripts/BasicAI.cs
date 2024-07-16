@@ -83,7 +83,7 @@ public class BasicAI : MonoBehaviour
             return;
         }
 
-        Debug.Log("AttackState");
+        //Debug.Log("AttackState");
         myCreature.UseTool();
         ResetStateTime();
     }
@@ -113,12 +113,12 @@ public class BasicAI : MonoBehaviour
         Vector3 moveCheckPosition = myCreature.transform.position + new Vector3(patrolDirection,0,0);
         if(Physics2D.OverlapCircle(moveCheckPosition,.1f,terrainMask) != null){
             ResetStateTime();
-            Debug.Log("something blocks us");
+            //Debug.Log("something blocks us");
             patrolDirection *= -1;
         }
         else if(Physics2D.OverlapCircle(footCheckPosition,.1f,terrainMask) == null){
             ResetStateTime();
-            Debug.Log("no ground ahead");
+            //Debug.Log("no ground ahead");
             patrolDirection *= -1;
         }
     }

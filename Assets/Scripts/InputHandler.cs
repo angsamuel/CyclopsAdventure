@@ -24,12 +24,16 @@ public class InputHandler : MonoBehaviour
 
         //managing tool
 
-        if(Input.GetKeyDown(KeyCode.Mouse0)){
+        if(Input.GetKey(KeyCode.Mouse0)){
             playerCreature.UseTool();
         }
 
         if(Input.GetKeyDown(KeyCode.F)){
             playerCreature.Interact();
+        }
+
+        if(Input.GetKeyDown(KeyCode.R)){
+            playerCreature.Reload();
         }
 
 
