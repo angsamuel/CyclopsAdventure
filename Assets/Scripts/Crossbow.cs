@@ -31,9 +31,10 @@ public class Crossbow : MonoBehaviour
     float bestSpeed = 30f, worstSpeed = 5f;
     float bestReloadTime = .25f, worstReloadTime = 2f;
     float bestAccuracy = 0f, worstAccuracy = 45f;
-    float bestRotation = 0.01f, worstRotation = 2f; 
+    float bestRotation = 10f, worstRotation = 1f; 
     float bestFireRate = 10, worstFireRate = 1f;
     int bestMaxAmmo = 10, worstMaxAmmo = 1;
+
 
 
     void Start(){
@@ -97,7 +98,7 @@ public class Crossbow : MonoBehaviour
             float t = 0;
             while(t<reloadTime){
                 t+=Time.deltaTime;
-                crossbowVisual.transform.localEulerAngles = new Vector3(0,t*180,0);
+                crossbowVisual.transform.localEulerAngles = new Vector3(0,(t/reloadTime)*180,0);
                 yield return null;
             }
             crossbowVisual.transform.localEulerAngles = new Vector3(0,0,0);
@@ -115,7 +116,18 @@ public class Crossbow : MonoBehaviour
         rotationSpeed = Mathf.Lerp(worstRotation, bestRotation, randomDist[3]); //done
         fireRate = Mathf.Lerp(worstFireRate, bestFireRate, randomDist[4]); 
         maxAmmo = (int)Mathf.Lerp(worstMaxAmmo, bestMaxAmmo+1, randomDist[5]); //done
-        currentAmmo = maxAmmo;
+
+
+
+
+        // Random.InitState(8);
+        // projectileSpeed = Random.Range(worstSpeed,bestSpeed); 
+        // reloadTime = Random.Range(worstReloadTime, bestReloadTime); 
+        // accuracy = Random.Range(worstAccuracy, bestAccuracy);
+        // rotationSpeed = Random.Range(worstRotation,bestRotation);
+        // fireRate = Random.Range(worstFireRate, bestFireRate);
+        // maxAmmo = Random.Range(worstMaxAmmo, bestMaxAmmo);
+        // currentAmmo = maxAmmo;
     }
 }
 

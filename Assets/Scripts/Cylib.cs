@@ -6,6 +6,7 @@ public static class Cylib
 {
     public static List<float> GetDistribution(int distSeed, int distLen){
         Random.InitState(distSeed);
+
         List<float> dist = new List<float>();
         for(int i = 0; i<distLen; i++){
             dist.Add(0);
@@ -19,7 +20,10 @@ public static class Cylib
             float randNum = Random.Range(Mathf.Max(0,total-((distLen-1.0f)-i)), Mathf.Min(total,1f));
             total -= randNum;
             dist[(i + offset)%distLen] = randNum;
+            //dist[i] = randNum;
         }
         return dist;
     }
+
+
 }
