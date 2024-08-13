@@ -168,15 +168,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   regen: 0
   seed: 0
-  roomsMin: 10
-  roomsMax: 30
+  roomsMin: 50
+  roomsMax: 100
   genRooms:
   - {fileID: 7233971819700234307, guid: 596b1ad9ab5f6d94e911df1ffe63ada5, type: 3}
   - {fileID: 385761473093415739, guid: c465cd75acce77a43a9246b6c6108308, type: 3}
   - {fileID: 5429738270915421058, guid: 94a631c0b29ccb74e85b16d12bb5d818, type: 3}
   - {fileID: 4572161266631745906, guid: 3ad0d123c813e514f99a4bb6d13426f7, type: 3}
   failures: 0
-  maxFailures: 100
+  maxFailures: 1000
 --- !u!1 &977659934
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.10230509, g: 0.123465985, b: 0.1792453, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

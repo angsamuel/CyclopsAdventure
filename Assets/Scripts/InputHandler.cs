@@ -36,6 +36,10 @@ public class InputHandler : MonoBehaviour
             playerCreature.Reload();
         }
 
+        if(Input.GetKeyDown(KeyCode.Q)){
+            TimeController.singleton.ToggleTime();
+        }
+
 
     }
 

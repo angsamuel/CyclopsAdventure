@@ -10,6 +10,7 @@ public class TilemapNoise : MonoBehaviour
     [Header("Config")]
     public float noiseScale = .1f;
     public int areaSize = 100;
+    public float thickness = 0.5f;
 
 
     public Tilemap tilemap;
@@ -23,10 +24,10 @@ public class TilemapNoise : MonoBehaviour
     void ApplyNoise(){
         for(int x = 0; x<areaSize; x++){
             for(int y = 0; y<areaSize; y++){
-                
+
                 float perlinValue = Mathf.PerlinNoise((float)x*noiseScale,(float)y*noiseScale); //keep coordinates between 0 and 1
-                
-                if(perlinValue > .75f){
+
+                if(perlinValue > (1-thickness)){
                     tilemap.SetTile(new Vector3Int(x,y),tile);
                 }
             }

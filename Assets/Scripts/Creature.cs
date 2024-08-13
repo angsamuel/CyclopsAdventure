@@ -11,6 +11,7 @@ public class Creature : MonoBehaviour
     [Header("Stats")]
     [SerializeField] float speed = 10.0f;
     [SerializeField] float jumpForce = 10;
+    [SerializeField] bool flying = false;
 
 
     [Header("Helpers")]
@@ -62,6 +63,11 @@ public class Creature : MonoBehaviour
     public void Stop(){
         Move(Vector3.zero);
     }
+
+    public void MoveToward(Vector3 goal){
+        Vector3 direction = (goal - transform.position).normalized;
+        Move(direction);
+    }
     public void Move(Vector3 movement){
 
         if(movement == Vector3.zero){
@@ -86,8 +92,13 @@ public class Creature : MonoBehaviour
 
         //GetComponent<Transform>().position += movement;
         //transform.position += movement;
-        movement.y = 0;
-        rb.velocity = movement + new Vector3(0,rb.velocity.y,0);
+        if(!flying){
+            movement.y = 0;
+            rb.velocity = movement + new Vector3(0,rb.velocity.y,0);
+        }else{
+            rb.velocity = movement;
+        }
+
         //GetComponent<Rigidbody2D>().AddForce(movement * Time.fixedDeltaTime);
         //GetComponent<Rigidbody2D>().MovePosition(GetComponent<Transform>().position + movement * Time.fixedDeltaTime);
     }
@@ -199,6 +210,10 @@ public class Creature : MonoBehaviour
         if(crossbow != null){
             crossbow.Reload();
         }
+    }
+
+    public float GetSpeed(){
+        return speed;
     }
 
 

@@ -31,7 +31,7 @@ public class Crossbow : MonoBehaviour
     float bestSpeed = 30f, worstSpeed = 5f;
     float bestReloadTime = .25f, worstReloadTime = 2f;
     float bestAccuracy = 0f, worstAccuracy = 45f;
-    float bestRotation = 10f, worstRotation = 1f; 
+    float bestRotation = 10f, worstRotation = 1f;
     float bestFireRate = 10, worstFireRate = 1f;
     int bestMaxAmmo = 10, worstMaxAmmo = 1;
 
@@ -80,12 +80,12 @@ public class Crossbow : MonoBehaviour
 
 
 
-    
+
     //stats
 
 
 
-    
+
 
     //new crossbow behavior
     public void Reload(){
@@ -114,15 +114,15 @@ public class Crossbow : MonoBehaviour
         reloadTime = Mathf.Lerp(worstReloadTime, bestReloadTime, randomDist[1]); //done
         accuracy = Mathf.Lerp(worstAccuracy, bestAccuracy, randomDist[2]); //done
         rotationSpeed = Mathf.Lerp(worstRotation, bestRotation, randomDist[3]); //done
-        fireRate = Mathf.Lerp(worstFireRate, bestFireRate, randomDist[4]); 
+        fireRate = Mathf.Lerp(worstFireRate, bestFireRate, randomDist[4]);
         maxAmmo = (int)Mathf.Lerp(worstMaxAmmo, bestMaxAmmo+1, randomDist[5]); //done
 
 
 
 
         // Random.InitState(8);
-        // projectileSpeed = Random.Range(worstSpeed,bestSpeed); 
-        // reloadTime = Random.Range(worstReloadTime, bestReloadTime); 
+        // projectileSpeed = Random.Range(worstSpeed,bestSpeed);
+        // reloadTime = Random.Range(worstReloadTime, bestReloadTime);
         // accuracy = Random.Range(worstAccuracy, bestAccuracy);
         // rotationSpeed = Random.Range(worstRotation,bestRotation);
         // fireRate = Random.Range(worstFireRate, bestFireRate);
